@@ -6,6 +6,8 @@ jobs:
     steps:
       - name: Checkout `master` branch
         uses: actions/checkout@master
+        run: |
+          git fetch --all --unshallow
       - name: Add Heroku remote
         uses: actions/heroku@master
         env:
