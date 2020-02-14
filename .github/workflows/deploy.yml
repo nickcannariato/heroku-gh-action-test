@@ -6,15 +6,17 @@ jobs:
     steps:
       - name: Checkout `master` branch
         uses: actions/checkout@master
+      - name: fetch --all --unshalow
+        run: git fetch --all --unshallow
+      - name: Add credentials to netrc
+        run: echo "machine git.heroku.com\n  login ${{ secrets.HEROKU_EMAIL }}\n  password ${{ secrets.HEROKU_API_KEY }}" > $HOME/.netrc
       - name: Add Heroku remote
         uses: actions/heroku@master
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
         with:
           args: git:remote -a gh-action-test-flask
-      - name: Push to Heroku
-        run: |
-          git fetch --all --unshallow
-          echo "machine git.heroku.com\n  login ${{ secrets.HEROKU_EMAIL }}\n  password ${{ secrets.HEROKU_API_KEY }}" > $HOME/.netrc
-          cat $HOME/.netrc
-          git push heroku master
+      - name: CAT netrc file to ensure machine is present
+        run: cat $HOME/.netrc
+      - name: Push to heroku (hopefully)
+        run: git push heroku master
