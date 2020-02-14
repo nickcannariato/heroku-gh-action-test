@@ -1,0 +1,14 @@
+on: push
+name: Deploy to Heroku
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: push
+        uses: actions/heroku@1.0.0
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: |
+          git remote add heroku https://git.heroku.com/gh-action-test-flask.git
+          git push heroku master
