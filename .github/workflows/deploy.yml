@@ -13,4 +13,6 @@ jobs:
         with:
           args: git:remote -a gh-action-test-flask
       - name: Push to Heroku
-        run: git push heroku master
+        run: |
+          echo "machine git.heroku.com login ${{ secrets.HEROKU_EMAIL }} password ${{ secrets.HEROKU_API_KEY }}" > $HOME/.netrc
+          git push heroku master
