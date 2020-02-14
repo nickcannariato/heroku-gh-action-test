@@ -15,5 +15,6 @@ jobs:
       - name: Push to Heroku
         run: |
           git fetch --all --unshallow
-          echo "machine git.heroku.com login ${{ secrets.HEROKU_EMAIL }} password ${{ secrets.HEROKU_API_KEY }}" > $HOME/.netrc
+          echo "machine git.heroku.com\n  login ${{ secrets.HEROKU_EMAIL }}\n  password ${{ secrets.HEROKU_API_KEY }}" > $HOME/.netrc
+          cat $HOME/.netrc
           git push heroku master
