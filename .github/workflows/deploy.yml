@@ -9,7 +9,13 @@ jobs:
       - name: fetch --all --unshalow
         run: git fetch --all --unshallow
       - name: Add credentials to netrc
-        run: echo "machine git.heroku.com\n  login ${{ secrets.HEROKU_EMAIL }}\n  password ${{ secrets.HEROKU_API_KEY }}" > $HOME/.netrc
+        run: |
+          echo "machine api.heroku.com" >>  $HOME/.netrc
+          echo "  login ${{ secrets.HEROKU_EMAIL }}" >> $HOME/.netrc
+          echo "  password ${{ secrets.HEROKU_API_KEY }}" >> $HOME/.netrc
+          echo "machine git.heroku.com" >>  $HOME/.netrc
+          echo "  login ${{ secrets.HEROKU_EMAIL }}" >> $HOME/.netrc
+          echo "  password ${{ secrets.HEROKU_API_KEY }}" >> $HOME/.netrc
       - name: Add Heroku remote
         uses: actions/heroku@master
         env:
