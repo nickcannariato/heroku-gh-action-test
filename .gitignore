@@ -3,11 +3,7 @@
 # Edit at https://www.gitignore.io/?templates=python,code,windows,macos,linux,pycharm
 
 ### Code ###
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
+.vscode/
 
 ### Linux ###
 *~

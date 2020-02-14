@@ -4,11 +4,12 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
-      - name: push
+      - name: Checkout `master` branch
+        uses: actions/checkout@master
+      - name: Add Heroku remote
         uses: actions/heroku@1.0.0
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-        run: |
-          git remote add heroku https://git.heroku.com/gh-action-test-flask.git
-          git push heroku master
+        args: git:remote -a gh-action-test-flask
+      - name: Push to Heroku
+        run: git push heroku master
