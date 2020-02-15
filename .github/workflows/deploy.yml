@@ -1,18 +1,14 @@
 on: push
+
 name: Deploy to Heroku
 jobs:
-  release:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout `master` branch
         uses: actions/checkout@master
-      - name: fetch --all --unshalow
-        run: git fetch --all --unshallow
       - name: Add credentials to netrc
         run: |
-          echo "machine api.heroku.com" >>  $HOME/.netrc
-          echo "  login ${{ secrets.HEROKU_EMAIL }}" >> $HOME/.netrc
-          echo "  password ${{ secrets.HEROKU_API_KEY }}" >> $HOME/.netrc
           echo "machine git.heroku.com" >>  $HOME/.netrc
           echo "  login ${{ secrets.HEROKU_EMAIL }}" >> $HOME/.netrc
           echo "  password ${{ secrets.HEROKU_API_KEY }}" >> $HOME/.netrc
@@ -21,10 +17,8 @@ jobs:
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
         with:
-          args: git:remote -a gh-action-test-flask
-      - name: CAT netrc file to ensure machine is present
-        run: cat $HOME/.netrc
-      - name: Push to heroku (hopefully)
+          args: git:remote -a ${{ secrets.HEROKU_APP_NAME }}
+      - name: Push to heroku
         run: |
           git fetch origin --unshallow
           git push heroku master
