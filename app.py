@@ -11,5 +11,4 @@ def index():
 
 
 if __name__ == "__main__":
-    app.debug = False
-    app.run(port=(os.getenv("PORT") or 8080))
+    app.run(port=(os.getenv("PORT")))
