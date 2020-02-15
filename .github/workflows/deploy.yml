@@ -25,4 +25,6 @@ jobs:
       - name: CAT netrc file to ensure machine is present
         run: cat $HOME/.netrc
       - name: Push to heroku (hopefully)
-        run: git push heroku master
+        run: |
+          git fetch origin --unshallow
+          git push heroku master
